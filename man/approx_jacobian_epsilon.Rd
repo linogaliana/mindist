@@ -7,7 +7,7 @@
 approx_jacobian_epsilon(theta, model_function, step = 1e-06, ...)
 }
 \arguments{
-\item{theta}{\eqn{theta} parameter}
+\item{theta}{Vector of structural parameters. Assuming a named vector.}
 
 \item{model_function}{Function that should be used
 to transform \eqn{\theta} parameter into

@@ -17,7 +17,6 @@
 #'
 #'
 #' @export
-#' @importFrom Matrix tcrossprod
 
 optimal_weight_matrix <- function(epsilon){
 

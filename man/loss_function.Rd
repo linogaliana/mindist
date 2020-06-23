@@ -2,35 +2,22 @@
 % Please edit documentation in R/loss_function.R
 \name{loss_function}
 \alias{loss_function}
-\title{Compute loss function between simulated and empirical moments}
+\title{Compute loss function in a flexible way}
 \usage{
 loss_function(
   theta,
   prediction_function = {     function(theta) theta },
   weights = 1L,
-  dim = 1L,
-  loss_scale = c("level", "log", "square"),
   verbose = FALSE,
   return_moment = FALSE,
   ...
 )
 }
 \arguments{
-\item{theta}{\eqn{theta} parameter}
+\item{theta}{Vector of structural parameters. Assuming a named vector.}
 
 \item{prediction_function}{Function that transforms \eqn{\theta}
-into vector of moments}
-
-\item{weights}{GMM weight matrix that should be used to rescale
-loss function}
-
-\item{dim}{Dimension for the loss function. If equal to 1 (default),
-loss function is real valued and \link{optim} can be called, otherwise
-optimization should be performed with other function}
-
-\item{loss_scale}{Should the loss be based on difference in levels (\emph{level}),
-in log (\emph{log}) or in euclidian norm (\emph{square}) between empirical and
-simulated. Ignored if \code{dim=1}}
+into vector of moments. In Newer and MacFadden, denoted \eqn{g(\theta)}}
 
 \item{verbose}{Logical value indicating whether we want to print informative
 messages to monitor progress}
@@ -39,11 +26,12 @@ messages to monitor progress}
 return moment matrix (observed, simulation, difference)}
 
 \item{...}{Additional arguments that should be used to control
-\code{prediction_function} behavior}
+\code{prediction_function} behavior. This function should return a
+\code{data.table} object with a variable denoted \code{epsilon} giving the
+distance that should be minimized}
 }
 \value{
-A distance between empirical and simulated moments,
-based on the \code{loss_scale} and \code{dim} parameters
+A distance between empirical and simulated moments
 
 Denoting \eqn{\epsilon(\theta)} the difference between
 population and simulated moments, loss function (or
@@ -55,6 +43,5 @@ objective function) writes down
 }
 \description{
 Compute loss associated with a vector of structural parameters
-between empirical \eqn{(m_k)_k} and simulated
-moments \eqn{(\hat{m}_k)_k}
+between some data and a transformation of structural parameters
 }

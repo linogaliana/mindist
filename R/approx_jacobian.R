@@ -29,7 +29,6 @@
 #' @param ... Additional arguments
 #'
 #'
-#' @importFrom foreach %dopar%
 #' @export
 
 
