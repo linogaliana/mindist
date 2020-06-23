@@ -5,6 +5,8 @@
 [![Codecov test coverage](https://codecov.io/gh/linogaliana/mindist/branch/master/graph/badge.svg)](https://codecov.io/gh/linogaliana/mindist?branch=master)
 <!-- badges: end -->
 
+![](./inst/cmd.png)
+
 The goal of mindist is to ...
 
 ## Installation
