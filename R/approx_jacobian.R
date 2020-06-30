@@ -86,3 +86,17 @@ approx_jacobian_epsilon <- function(
   return(H)
 
 }
+
+
+#' Internal function to extract moments
+#'
+#' @param theta \eqn{\theta} parameter
+#' @inheritParams loss_function
+#' @inheritParams approx_jacobian_epsilon
+#' @param ... Additional arguments for loss function
+#'
+#' @return Mismatch between theoretical and sample moments
+
+extract_moment <- function(theta, model_function, ...){
+  loss_function(theta = theta, model_function = model_function, ...)[['epsilon']]
+}
