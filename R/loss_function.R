@@ -36,7 +36,6 @@ loss_function <- function(theta,
                           ...
 ){
 
-  loss_scale <- match.arg(loss_scale)
   args <- list(...)
 
   if ('match_call' %in% names(args)){
