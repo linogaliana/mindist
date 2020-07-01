@@ -14,13 +14,6 @@
 #'  In the former case, known as feasible GMM,
 #'  (`method` = \emph{"two_stage"})
 #'
-#' @details
-#' The idea in GMM framework is to find \eqn{\theta} estimator such that
-#' \deqn{\hat\theta=\argmin_\theta
-#'   \left(\mathcal{K}^o-\mathcal{K}^s(\theta)\right)^\intercal
-#'   W^{-1}\left(\mathcal{K}^o-\mathcal{K}^s(\theta)\right)}
-#' In practice, we use Nelder-Mead algorithm (see \link[stats]{optim}) to converge
-#' to an estimates for \eqn{\theta}.
 #'
 #' @references
 #' \insertAllCited{}
