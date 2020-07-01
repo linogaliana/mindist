@@ -1,6 +1,6 @@
 #' Efficient weight matrix in GMM framework
 #'
-#' Implementation of the GMM optimal matrix \insertCite{hansen1982large}{wealthyR}
+#' Implementation of the GMM optimal matrix \insertCite{hansen1982large}{mindist}
 #'  in a simulated method of moments framework
 #'
 #' @param epsilon Vector of difference between sample and simulated moments

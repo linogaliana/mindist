@@ -6,6 +6,7 @@
 #' @param theta Vector of structural parameters. Assuming a named vector.
 #' @param prediction_function Function that transforms \eqn{\theta}
 #'  into vector of moments. In Newer and MacFadden, denoted \eqn{g(\theta)}
+#' @param weights Weight matrix \eqn{W} that should be used
 #' @param ... Additional arguments that should be used to control
 #'  `prediction_function` behavior. This function should return a
 #'  `data.table` object with a variable denoted `epsilon` giving the

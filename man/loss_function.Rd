@@ -19,6 +19,8 @@ loss_function(
 \item{prediction_function}{Function that transforms \eqn{\theta}
 into vector of moments. In Newer and MacFadden, denoted \eqn{g(\theta)}}
 
+\item{weights}{Weight matrix \eqn{W} that should be used}
+
 \item{verbose}{Logical value indicating whether we want to print informative
 messages to monitor progress}
 

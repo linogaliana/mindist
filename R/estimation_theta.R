@@ -5,12 +5,12 @@
 #' Estimation is performed using simulated method of moments and
 #' is a particular case of extremum estimator. Theoretical
 #' framework can be found on
-#' \insertCite{gourieroux1993simulation;textual}{wealthyR}.
+#' \insertCite{gourieroux1993simulation;textual}{mindist}.
 #'
 #' Weight matrix \eqn{W} is either assumed to be identity
 #'  (`method` = \emph{"one_stage"}) or
 #'  estimated with the optimal weight matrix as
-#'  proposed by \insertCite{hansen1982large;textual}{wealthyR}.
+#'  proposed by \insertCite{hansen1982large;textual}{mindist}.
 #'  In the former case, known as feasible GMM,
 #'  (`method` = \emph{"two_stage"})
 #'

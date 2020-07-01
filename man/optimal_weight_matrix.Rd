@@ -10,7 +10,7 @@ optimal_weight_matrix(epsilon)
 \item{epsilon}{Vector of difference between sample and simulated moments}
 }
 \description{
-Implementation of the GMM optimal matrix \insertCite{hansen1982large}{wealthyR}
+Implementation of the GMM optimal matrix \insertCite{hansen1982large}{mindist}
 in a simulated method of moments framework
 }
 \details{
