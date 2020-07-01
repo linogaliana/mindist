@@ -14,9 +14,7 @@ Implementation of the GMM optimal matrix \insertCite{hansen1982large}{mindist}
 in a simulated method of moments framework
 }
 \details{
-Denoting \eqn{\varepsilon} the difference between sample
-and simulated moments, GMM objective function is
-known to be
+The objective function is:
 \deqn{\theta = \arg \min_{\theta} \bigg\{ \mathcal{l}(\theta) = \epsilon(\theta)^\intercal W(\theta) \epsilon(\theta) \bigg\}}
 The optimal weight matrix is unknown, an estimator is
 \deqn{\widehat{W} \big(\widehat{\theta_{(1)}}\big) = \mathbb{E}\bigg(\varepsilon \left(\widehat{\theta_{(1)}} \right) \varepsilon \left( \widehat{\theta_{(1)}}\right)^\intercal \bigg)}
