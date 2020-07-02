@@ -6,12 +6,6 @@
 #' @param epsilon Vector of difference between sample and simulated moments
 #'
 #'
-#' @details
-#' The objective function is:
-#' \deqn{\theta = \arg \min_{\theta} \bigg\{ \mathcal{l}(\theta) = \epsilon(\theta)^\intercal W(\theta) \epsilon(\theta) \bigg\}}
-#' The optimal weight matrix is unknown, an estimator is
-#' \deqn{\widehat{W} \big(\widehat{\theta_{(1)}}\big) = \mathbb{E}\bigg(\varepsilon \left(\widehat{\theta_{(1)}} \right) \varepsilon \left( \widehat{\theta_{(1)}}\right)^\intercal \bigg)}
-#' where \eqn{\theta_{(1)}} is a first step GMM estimator
 #'
 #'
 #' @export

@@ -9,8 +9,6 @@
 #' @param ... Additional arguments that should be passed
 #'  to `model_function`
 #'
-#' Under standard hypotheses, GMM yields
-#'  \deqn{n*g(\theta)^T*W*g(\theta)}
 #' @return List with following elements
 #' @importFrom stats pchisq
 #' @export
