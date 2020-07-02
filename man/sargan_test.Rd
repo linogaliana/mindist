@@ -17,10 +17,7 @@ sargan_test(theta_hat, S, model_function = {
 defining moment conditions}
 
 \item{...}{Additional arguments that should be passed
-to \code{model_function}
-
-Under standard hypotheses, GMM yields
-\deqn{n*g(\theta)^T*W*g(\theta)}}
+to \code{model_function}}
 }
 \value{
 List with following elements
