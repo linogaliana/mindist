@@ -1,17 +1,22 @@
 Package: mindist
-Title: What the Package Does (One Line, Title Case)
+Title: Minimum distance estimation in R
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Lino",
+           family = "Galiana",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "lino.galiana@insee.fr")
+Description: Classical minimum distance or GMM estimation in R.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Suggests: 
-    covr
+    covr,
+    testthat,
+    gmm
+Imports:
+    data.table,
+    Rdpack
+RdMacros: Rdpack
