@@ -22,10 +22,6 @@
 #' @param step \eqn{h} step to numerically compute
 #'  derivative
 #'
-#' @return A \eqn{K \times K} matrix where
-#'  `K` is the number of dimensions. If \eqn{i} represents a row and
-#'  \eqn{j} a column, jacobian matrix element is
-#'  \deqn{\frac{\delta \epsilon_i}{\delta \beta_j}}
 #' @param ... Additional arguments
 #'
 #'

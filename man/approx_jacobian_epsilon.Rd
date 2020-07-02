@@ -18,12 +18,6 @@ derivative}
 
 \item{...}{Additional arguments}
 }
-\value{
-A \eqn{K \times K} matrix where
-\code{K} is the number of dimensions. If \eqn{i} represents a row and
-\eqn{j} a column, jacobian matrix element is
-\deqn{\frac{\delta \epsilon_i}{\delta \beta_j}}
-}
 \description{
 A numerical estimation for the jacobian matrix
 giving the change of loss function dimensions

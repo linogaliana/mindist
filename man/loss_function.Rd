@@ -35,12 +35,6 @@ distance that should be minimized}
 \value{
 A distance between empirical and simulated moments
 
-Denoting \eqn{\epsilon(\theta)} the difference between
-population and simulated moments, loss function (or
-objective function) writes down
-\deqn{ L(\theta) = \epsilon(\theta)'  W(\theta) \epsilon(\theta)}
-\eqn{W(\theta)} is determined by \code{weight} argument
-
 \link{estimation_theta} for GMM estimation
 }
 \description{
