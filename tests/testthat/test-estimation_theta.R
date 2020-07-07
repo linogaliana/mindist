@@ -42,15 +42,22 @@ msm2 <- estimation_theta(theta_0 = c("mu" = 0, "sigma" = 0.2),
                          method = "two_step")
 
 
-test_that("Method of simulated moments should be close from theoretical parameters", ({
-  expect_equal(c(mu,sd), as.numeric(msm1$NelderMead$`NM_step1`$`par`), tolerance = 10e-1)
+testthat::test_that("Method of simulated moments should be close from theoretical parameters", ({
+  testthat::expect_equal(c(mu,sd), as.numeric(msm1$NelderMead$`NM_step1`$`par`), tolerance = 10e-1)
 }))
 
-test_that("Method of simulated moments should be close from theoretical parameters", ({
-  expect_equal(c(mu,sd), as.numeric(msm2$NelderMead$`NM_step1`$`par`), tolerance = 10e-1)
+testthat::test_that("Method of simulated moments should be close from theoretical parameters", ({
+  testthat::expect_equal(c(mu,sd), as.numeric(msm2$NelderMead$`NM_step1`$`par`), tolerance = 10e-1)
 }))
 
-
+testthat::test_that("Two steps improve parameter estimation", {
+  testthat::expect_equal(
+    sum(
+      abs(msm2$NelderMead$`NM_step1`$`par` - c(mu,sd)) > abs(msm2$NelderMead$`NM_step2`$`par` - c(mu,sd))
+    ),
+    2
+  )
+})
 
 # PART 2: REPLICATE OLS --------------------------------
 
