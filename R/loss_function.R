@@ -78,6 +78,10 @@ loss_function <- function(theta,
 
 # LOSS FUNCTION COMPUTATIONS ------------------
 
+  if (length(weights) == 1){
+    return(sum(epsilon^2)*weights)
+  }
+
   return(
     as.numeric(
       t(epsilon) %*% W %*% epsilon
