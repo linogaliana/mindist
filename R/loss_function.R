@@ -29,6 +29,7 @@ loss_function <- function(theta,
                           weights = 1L,
                           verbose = FALSE,
                           return_moment = FALSE,
+                          moments_weights = NULL,
                           ...
 ){
 
@@ -58,6 +59,10 @@ loss_function <- function(theta,
 
   # RESIDUAL ERROR
   epsilon <- df_moment[['epsilon']]
+
+  if (!is.null(moments_weights)){
+    epsilon <- epsilon*moments_weights
+  }
 
 
   if (verbose) print(epsilon)
