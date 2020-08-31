@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.com/linogaliana/mindist.svg?branch=master)](https://travis-ci.com/linogaliana/mindist)
-[![Codecov test coverage](https://codecov.io/gh/linogaliana/mindist/branch/master/graph/badge.svg)](https://codecov.io/gh/linogaliana/mindist?branch=master)
+[![codecov](https://codecov.io/gh/linogaliana/mindist/branch/master/graph/badge.svg)](https://codecov.io/gh/linogaliana/mindist)
 <!-- badges: end -->
 
 ![](./inst/cmd.png)
