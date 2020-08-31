@@ -7,6 +7,9 @@
 #' @param prediction_function Function that transforms \eqn{\theta}
 #'  into vector of moments. In Newer and MacFadden, denoted \eqn{g(\theta)}
 #' @param weights Weight matrix \eqn{W} that should be used
+#' @param moments_weights User-defined weights that should be applied
+#'  to reweight moments importance. This is a user choice
+#'  independent of using an optimal weight matrix
 #' @param ... Additional arguments that should be used to control
 #'  `prediction_function` behavior. This function should return a
 #'  `data.table` object with a variable denoted `epsilon` giving the
