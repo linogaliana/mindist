@@ -79,7 +79,7 @@ estimation_theta <- function(theta_0,
   method <- match.arg(method)
 
   if ('method' %in% names(optim_args)){
-    optim_method <- optim_args[['method']]
+    optim_method <- as.character(optim_args$method)
   } else{
     optim_method <- "Nelder-Mead"
   }
