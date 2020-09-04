@@ -78,6 +78,12 @@ estimation_theta <- function(theta_0,
 
   method <- match.arg(method)
 
+  if ('method' %in% names(optim_args)){
+    optim_method <- optim_args[['method']]
+  } else{
+    optim_method <- "Nelder-Mead"
+  }
+
   # STEP 1: ESTIMATE W WEIGHT MATRIX -----------------------------------------
 
 
@@ -87,7 +93,7 @@ estimation_theta <- function(theta_0,
                     par = theta_0,
                     ...,
                     weights = 1L,
-                    method = "Nelder-Mead",
+                    method = optim_method,
                     control = optim_args,
                     return_moment = FALSE)
 
@@ -125,7 +131,7 @@ estimation_theta <- function(theta_0,
                       par = NM_step1$`par`,
                       ...,
                       weights = W_1,
-                      method = "Nelder-Mead",
+                      method = optim_method,
                       control = optim_args,
                       return_moment = FALSE)
 
