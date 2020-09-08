@@ -131,8 +131,8 @@ estimation_theta <- function(theta_0,
                       par = NM_step1$`par`,
                       ...,
                       weights = W_1,
-                      method = optim_method,
-                      control = optim_args,
+                      # method = optim_method,
+                      # control = optim_args,
                       return_moment = FALSE)
 
 
