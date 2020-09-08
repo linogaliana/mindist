@@ -64,6 +64,10 @@ loss_function <- function(theta,
   epsilon <- df_moment[['epsilon']]
 
   if (!is.null(moments_weights)){
+    if (is.character(moments_weights)){
+      print("moments_weights is provided as character, assuming this is a variable name")
+      moments_weights <- df_moment[[moments_weights]]
+    }
     epsilon <- epsilon*moments_weights
   }
 
