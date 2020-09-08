@@ -1,6 +1,13 @@
 context("test-loss_function")
 
 
+# return_moment = TRUE --------------------------
+
+
+
+
+
+
 # true_theta <- c(4,2)
 #
 # loss <- function(est_theta, true_theta = c(4,2), weights = NULL){

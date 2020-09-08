@@ -7,8 +7,7 @@
 estimation_theta(
   theta_0,
   model_function = {     function(theta) theta },
-  optim_args = list(),
-  method = c("two_step", "one_step"),
+  approach = c("two_step", "one_step"),
   ...
 )
 }
@@ -19,10 +18,7 @@ named vector}
 \item{model_function}{Function to transform \code{theta} into sample conditions.
 See examples.}
 
-\item{optim_args}{Arguments that should be used to control \link[stats]{optim}
-routine}
-
-\item{method}{Estimation method. Either \emph{one_step} or \emph{two_step} (default)}
+\item{approach}{Estimation approach. Either \emph{one_step} or \emph{two_step} (default)}
 
 \item{...}{Additional arguments that should be used by
 \code{model_function}}
@@ -35,11 +31,11 @@ framework can be found on
 \insertCite{gourieroux1993simulation;textual}{mindist}.
 
 Weight matrix \eqn{W} is either assumed to be identity
-(\code{method} = \emph{"one_stage"}) or
+(\code{approach} = \emph{"one_stage"}) or
 estimated with the optimal weight matrix as
 proposed by \insertCite{hansen1982large;textual}{mindist}.
 In the former case, known as feasible GMM,
-(\code{method} = \emph{"two_stage"})
+(\code{approach} = \emph{"two_stage"})
 }
 \examples{
 \dontrun{
@@ -74,7 +70,7 @@ objective_function <- function(theta, weights = 1L, return_moment = FALSE, ...){
 
 msm1 <- estimation_theta(theta_0 = c(0, 0),
                          model_function = objective_function,
-                         method = "one_step")
+                         approach = "one_step")
 
 }
 
