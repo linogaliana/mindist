@@ -23,8 +23,6 @@
 #'  named vector
 #' @param model_function Function to transform `theta` into sample conditions.
 #'  See examples.
-#' @param optim_args Arguments that should be used to control \link[stats]{optim}
-#'  routine
 #' @param approach Estimation approach. Either *one_step* or *two_step* (default)
 #' @param ... Additional arguments that should be used by
 #'  `model_function`

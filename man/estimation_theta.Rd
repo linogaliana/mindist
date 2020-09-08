@@ -22,9 +22,6 @@ See examples.}
 
 \item{...}{Additional arguments that should be used by
 \code{model_function}}
-
-\item{optim_args}{Arguments that should be used to control \link[stats]{optim}
-routine}
 }
 \description{
 User front-end function for indirect inference on microsimulated data.
