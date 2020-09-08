@@ -34,12 +34,12 @@ objective_function <- function(theta, prediction_function, weights = 1L, return_
 msm1 <- estimation_theta(theta_0 = c("mu" = 0, "sigma" = 0.2),
                          model_function = objective_function,
                          prediction_function = moment_function,
-                         method = "one_step")
+                         approach = "one_step")
 
 msm2 <- estimation_theta(theta_0 = c("mu" = 0, "sigma" = 0.2),
                          model_function = objective_function,
                          prediction_function = moment_function,
-                         method = "two_step")
+                         approach = "two_step")
 
 
 test_that("Method of simulated moments should be close from theoretical parameters", ({
@@ -108,13 +108,13 @@ test_that("Method of simulated moments should be close from theoretical paramete
 # msm1 <- estimation_theta(theta_0 = c("const" = 0.1, "beta1" = 0),
 #                          model_function = objective_function,
 #                          prediction_function = moment_function,
-#                          method = "one_step")
+#                          approach = "one_step")
 #
 #
 # msm2 <- estimation_theta(theta_0 = c("const" = 0, "beta1" = 0),
 #                          model_function = objective_function,
 #                          prediction_function = moment_function,
-#                          method = "two_step")
+#                          approach = "two_step")
 #
 #
 # test_that("[One-step] Method of simulated moments should be close from OLS estimator using E(xu) condition", ({

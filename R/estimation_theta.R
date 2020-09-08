@@ -8,11 +8,11 @@
 #' \insertCite{gourieroux1993simulation;textual}{mindist}.
 #'
 #' Weight matrix \eqn{W} is either assumed to be identity
-#'  (`method` = \emph{"one_stage"}) or
+#'  (`approach` = \emph{"one_stage"}) or
 #'  estimated with the optimal weight matrix as
 #'  proposed by \insertCite{hansen1982large;textual}{mindist}.
 #'  In the former case, known as feasible GMM,
-#'  (`method` = \emph{"two_stage"})
+#'  (`approach` = \emph{"two_stage"})
 #'
 #'
 #' @references
@@ -25,7 +25,7 @@
 #'  See examples.
 #' @param optim_args Arguments that should be used to control \link[stats]{optim}
 #'  routine
-#' @param method Estimation method. Either *one_step* or *two_step* (default)
+#' @param approach Estimation approach. Either *one_step* or *two_step* (default)
 #' @param ... Additional arguments that should be used by
 #'  `model_function`
 #'
@@ -61,7 +61,7 @@
 #'
 #' msm1 <- estimation_theta(theta_0 = c(0, 0),
 #'                          model_function = objective_function,
-#'                          method = "one_step")
+#'                          approach = "one_step")
 #'
 #' }
 #'
@@ -72,17 +72,17 @@
 
 estimation_theta <- function(theta_0,
                              model_function = {function(theta) theta},
-                             optim_args = list(),
-                             method = c("two_step","one_step"),
+                             # optim_args = list(),
+                             approach = c("two_step","one_step"),
                              ...){
 
-  method <- match.arg(method)
+  approach <- match.arg(approach)
 
-  if ('method' %in% names(optim_args)){
-    optim_method <- as.character(optim_args$method)
-  } else{
-    optim_method <- "Nelder-Mead"
-  }
+  # if ('method' %in% names(optim_args)){
+  #   optim_method <- as.character(optim_args$method)
+  # } else{
+  #   optim_method <- "Nelder-Mead"
+  # }
 
   # STEP 1: ESTIMATE W WEIGHT MATRIX -----------------------------------------
 
@@ -93,8 +93,8 @@ estimation_theta <- function(theta_0,
                     par = theta_0,
                     ...,
                     weights = 1L,
-                    method = optim_method,
-                    control = optim_args,
+                    # method = optim_method,
+                    # control = optim_args,
                     return_moment = FALSE)
 
 
@@ -116,7 +116,7 @@ estimation_theta <- function(theta_0,
 
 
 
-  if (method == "two_step"){
+  if (approach == "two_step"){
 
     # STEP 2: ESTIMATE THETA WITH W MATRIX -------------------------
 
