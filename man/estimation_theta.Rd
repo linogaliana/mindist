@@ -6,7 +6,8 @@
 \usage{
 estimation_theta(
   theta_0,
-  model_function = {     function(theta) theta },
+  prediction_function = {     function(theta) theta },
+  objective_function = loss_function,
   approach = c("two_step", "one_step"),
   ...
 )
@@ -15,13 +16,13 @@ estimation_theta(
 \item{theta_0}{Initial values for \eqn{\theta} parameter. This can be a
 named vector}
 
-\item{model_function}{Function to transform \code{theta} into sample conditions.
-See examples.}
-
 \item{approach}{Estimation approach. Either \emph{one_step} or \emph{two_step} (default)}
 
 \item{...}{Additional arguments that should be used by
 \code{model_function}}
+
+\item{model_function}{Function to transform \code{theta} into sample conditions.
+See examples.}
 }
 \description{
 User front-end function for indirect inference on microsimulated data.
