@@ -99,16 +99,6 @@ moment_OLS <- function(theta, ...){
 }
 
 
-# objective_function <- function(theta, prediction_function, weights = 1L, return_moment = FALSE, ...){
-#   if (return_moment) return(moment_function(theta))
-#   if (length(weights)==1) return(
-#     moment_function(theta)$epsilon*moment_function(theta)$epsilon
-#     )
-#   eps <- moment_function(theta)
-# #epsilon/as.numeric(cbind(1L, df$x1) %*% theta)
-#   return(t(eps) %*% weights %*% eps)
-# }
-
 
 # # 1: LINEAR REGRESSION ===========
 #
@@ -172,3 +162,41 @@ moment_OLS <- function(theta, ...){
 # test_that("[Two-steps ; s.e.] Method of simulated moments should be close from theoretical GMM estimator", ({
 #   expect_equal(as.numeric(se_gmm2), as.numeric(se_msm2), tolerance = 10e-2)
 # }))
+
+
+
+# PART 3: REPLICATE POISSON --------------------------------
+
+
+x <- replicate(ncol, rnorm(n))
+
+df <- data.frame(x1 = x[,1], x2 = x[,2],
+                 x3 = x[,3])
+
+df$y <- exp(1 + 2*df$x1) + rnorm(n)
+
+
+# FORMALISM REQUIRED FOR OUR FUNCTIONS
+moment_poisson <- function(theta, ...){
+  return(
+    data.table::data.table(
+      'y' = df$y,
+      'y_hat' = as.numeric(cbind(1L, df$x1) %*% theta),
+      'epsilon' = as.numeric(df$x1*(df$y - exp(cbind(1L, df$x1) %*% theta)))
+    )
+  )
+}
+
+
+msm1 <- estimation_theta(theta_0 = c("const" = 0.1, "beta1" = 0),
+                         prediction_function = moment_poisson,
+                         approach = "two_step")
+
+
+test_that("Method of simulated moments should be close from theoretical parameters", ({
+  expect_equal(c(1, 2), as.numeric(msm2$NelderMead$`NM_step1`$`par`), tolerance = 10e-1)
+}))
+
+
+
+
