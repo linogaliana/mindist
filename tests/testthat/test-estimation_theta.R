@@ -165,7 +165,7 @@ moment_OLS <- function(theta, ...){
 
 
 
-# PART 3: REPLICATE POISSON --------------------------------
+# PART 3: REPLICATE POISSON REGRESSION --------------------------------
 
 
 x <- replicate(ncol, rnorm(n))
@@ -199,4 +199,27 @@ test_that("Method of simulated moments should be close from theoretical paramete
 
 
 
+# PART 4: PROBIT --------------------------------
+# stata help p.21
 
+# df$y <- as.numeric((1 + 2*df$x1 + rnorm(n)) > 0)
+#
+#
+# moment_probit <- function(theta, ...){
+#
+#   phi <- dnorm(exp(cbind(1L, df$x1) %*% theta))
+#   Phi <- pnorm(exp(cbind(1L, df$x1) %*% theta))
+#
+#
+#   return(
+#     data.table::data.table(
+#       'y' = df$y,
+#       'y_hat' = as.numeric(cbind(1L, df$x1) %*% theta),
+#       'epsilon' = as.numeric(df$x1*(df$y * phi/Phi - (1-df$y)*phi/(1-Phi)))
+#     )
+#   )
+# }
+#
+# msm1 <- estimation_theta(theta_0 = c("const" = 0.1, "beta1" = 0),
+#                          prediction_function = moment_poisson,
+#                          approach = "two_step")
