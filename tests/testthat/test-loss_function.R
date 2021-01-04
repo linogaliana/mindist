@@ -33,6 +33,10 @@ testthat::test_that(
       loss_function(seq_len(10), return_moment = TRUE, prediction_function = function(theta, a) return(a*theta), a = -3),
       -3*seq_len(10)
     )
+    testthat::expect_equal(
+      loss_function(seq_len(10), return_moment = TRUE, prediction_function = function(theta, a) return(data.frame(x = a*theta, y = a)), a = -3),
+      data.frame(x = -3*seq_len(10), y = -3)
+    )
   }
 )
 
@@ -43,6 +47,38 @@ testthat::test_that(
     loss_function(2L, return_moment = TRUE, prediction_function = function(x) return(x^2))
   )
 )
+
+testthat::test_that(
+  "error when prediction_function does not return a data.table with epsilon",
+  testthat::expect_error(
+    loss_function(2L, prediction_function = function(theta) return(theta^2))
+  )
+)
+
+
+# simplest setup: no weight or moment_weights -------------------
+
+testthat::test_that(
+  "In that case, l(theta) = sum(prediction_function(theta)^2)",
+  testthat::expect_equal(
+    loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta))),
+    sum(c(2L,3L)^2)
+  )
+)
+
+testthat::test_that(
+  "Even with more complex setup, l(theta) = sum(prediction_function(theta)^2)",
+  testthat::expect_equal(
+    loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta + 2))),
+    sum((c(2L,3L) + 2)^2)
+  )
+  testthat::expect_equal(
+    loss_function(c(2L,3L), prediction_function = function(theta, a) return(data.table::data.table(epsilon = theta + a*log(abs(theta)))), a = 2),
+    sum((c(2L,3L) + 2*log(c(2L,3L)))^2)
+  )
+)
+
+
 
 # true_theta <- c(4,2)
 #

@@ -56,6 +56,7 @@ loss_function <- function(theta,
     paste0("\n======= Parameter values: ========== \n ", paste(paste0(names(theta), ": "), theta, collapse = "; "), "\n")
   )
 
+  if (!inherits(df_moment, "data.table")) stop("prediction_function should return a data.table with a column epsilon (e.g. diff between observed and predicted values) that aims to be minimized")
 
 
   # COMPUTE LOSS ---------------------------------------
