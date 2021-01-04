@@ -180,6 +180,13 @@ testthat::test_that(
                     moments_weights = 1/seq_len(10)),
       as.numeric(t(sqrt(1/seq_len(10)) * seq_len(10)) %*% diag(10) %*% (sqrt(1/seq_len(10)) * seq_len(10)))
     )
+    testthat::expect_equal(
+      loss_function(seq_len(10),
+                    prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
+                    weights = diag(seq_len(10)),
+                    moments_weights = 1/seq_len(10)),
+      as.numeric(t(sqrt(1/seq_len(10)) * seq_len(10)) %*% diag(seq_len(10)) %*% (sqrt(1/seq_len(10)) * seq_len(10)))
+    )
   }
 )
 
