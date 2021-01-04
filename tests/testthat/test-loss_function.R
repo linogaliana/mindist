@@ -67,17 +67,74 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  "Even with more complex setup, l(theta) = sum(prediction_function(theta)^2)",
-  testthat::expect_equal(
-    loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta + 2))),
-    sum((c(2L,3L) + 2)^2)
-  )
-  testthat::expect_equal(
-    loss_function(c(2L,3L), prediction_function = function(theta, a) return(data.table::data.table(epsilon = theta + a*log(abs(theta)))), a = 2),
-    sum((c(2L,3L) + 2*log(c(2L,3L)))^2)
-  )
+  "Even with more complex setup, l(theta) = sum(prediction_function(theta)^2)",{
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta + 2))),
+      sum((c(2L,3L) + 2)^2)
+    )
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta, a) return(data.table::data.table(epsilon = theta + a*log(abs(theta)))), a = 2),
+      sum((c(2L,3L) + 2*log(c(2L,3L)))^2)
+    )
+  }
 )
 
+
+# add weight argument ---------------------
+
+# weight is scalar
+testthat::test_that(
+  "scalar: just a multiplicative effect",
+  {
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = 2L),
+      sum(2*c(2L,3L)^2)
+    )
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = log(2)),
+      sum(log(2)*c(2L,3L)^2)
+    )
+  }
+)
+
+# weight is a matrix
+testthat::test_that(
+  "matrix: \eps' %*% W %*% \eps",
+  {
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = diag(2)),
+      sum(c(2L,3L)^2)
+    )
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = diag(rep(2,2))),
+      sum(c(2L,3L)^2)
+    )
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = diag(c(1,2))),
+      as.numeric(c(2,3) %*% diag(c(1,2)) %*% c(2,3))
+    )
+  }
+)
+
+# weight is NULL: W = (eps'eps)^{-1} -> l(theta) = length(theta)^2
+testthat::test_that(
+  "matrix: \eps' %*% W %*% \eps",
+  {
+    testthat::expect_equal(
+      loss_function(seq_len(10), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = NULL),
+      100
+    )
+    # prediction_function does not matter, arithmetic equality
+    testthat::expect_equal(
+      loss_function(seq_len(10), prediction_function = function(theta) return(data.table::data.table(epsilon = theta + log(theta))), weights = NULL),
+      100
+    )
+    testthat::expect_equal(
+      loss_function(seq_len(13), prediction_function = function(theta) return(data.table::data.table(epsilon = theta + log(theta))), weights = NULL),
+      13^2
+    )
+  }
+)
 
 
 # true_theta <- c(4,2)
