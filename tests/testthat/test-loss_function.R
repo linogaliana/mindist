@@ -118,7 +118,7 @@ testthat::test_that(
 
 # weight is NULL: W = (eps'eps)^{-1} -> l(theta) = length(theta)^2
 testthat::test_that(
-  "matrix: \eps' %*% W %*% \eps",
+  "matrix: l(theta) = length(theta)^2",
   {
     testthat::expect_equal(
       loss_function(seq_len(10), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = NULL),
@@ -141,7 +141,7 @@ testthat::test_that(
 
 # weight_moments are multiplicative
 testthat::test_that(
-  "In that case, l(theta) = sum(prediction_function(theta)^2)",
+  "[without weights] l(theta) = sum(weight_moments*prediction_function(theta)^2)",
   {
     testthat::expect_equal(
       loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
@@ -157,4 +157,15 @@ testthat::test_that(
   }
 )
 
+
+testthat::test_that(
+  "[with weights = NULL] no longer l(theta) = length(theta)^2 but theta1^2 ",
+  testthat::expect_equal(
+    loss_function(seq_len(10),
+                  prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
+                  weights = NULL,
+                  moments_weights = 1/seq_len(10)),
+    as.numeric(t(sqrt(1/seq_len(10)) * seq_len(10)) %*% optimal_weight_matrix(seq_len(10)) %*% (sqrt(1/seq_len(10)) * seq_len(10)))
+  )
+)
 
