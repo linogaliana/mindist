@@ -68,7 +68,7 @@ loss_function <- function(theta,
       print("moments_weights is provided as character, assuming this is a variable name")
       moments_weights <- df_moment[[moments_weights]]
     }
-    epsilon <- epsilon*moments_weights
+    # epsilon <- epsilon*moments_weights
   }
 
 
@@ -88,17 +88,26 @@ loss_function <- function(theta,
   }
 
 
-# LOSS FUNCTION COMPUTATIONS ------------------
+  # LOSS FUNCTION COMPUTATIONS ------------------
 
-  if (length(weights) == 1){
-    return(sum(epsilon^2)*weights)
+  eps_weight <- epsilon
+  if (!is.null(moments_weights)){
+    eps_weight <- sqrt(moments_weights)*eps_weight
   }
 
+  if (length(weights) == 1){
+    # with default weights = 1L,
+    # equivalent to sse_hat = e_adj' * W_0 * e_adj in Einav et al. replication code in objective_function.m
+    return(sum(eps_weight^2)*weights)
+  }
+
+  # we mimic Einav et al. replication code (compute_std_errors.m)
   return(
     as.numeric(
-      t(epsilon) %*% W %*% epsilon
+      t(eps_weight) %*% W %*% eps_weight
     )
   )
+
 
 
 }
