@@ -205,27 +205,30 @@ estimation_theta <- function(theta_0,
   se_estimator <- sqrt(diag(Vtheta)/nrow(Gamma)) # to match with (9.100) in MacKinnon (because our Vtheta is not 1/n factor)
   names(se_estimator) <- names(estimator_theta)
 
+  out <- list(
+    "estimates" = list(
+      "theta_hat" = estimator_theta,
+      "se_theta_hat" = se_estimator,
+      "theta_1" = NM_step1$`par`,
+      "W_1" = W_1,
+      "jacobian" = Gamma,
+      "vcov_theta" = Vtheta
+    ),
+    "moments" = list(
+      "moment_first_step" = df_moment,
+      "moment_optimum" = df_moment_optim
+    ),
+    "NelderMead" = list(
+      "NM_step1" = NM_step1,
+      "NM_step2" = NM_step2
+    ),
+    "initialParams" = list("theta_0" = theta_0),
+    "envir" = envir
+  )
+
+  class(out) <- c("mindist", class(out))
 
   return(
-    list(
-      "estimates" = list(
-        "theta_hat" = estimator_theta,
-        "se_theta_hat" = se_estimator,
-        "theta_1" = NM_step1$`par`,
-        "W_1" = W_1,
-        "jacobian" = Gamma,
-        "vcov_theta" = Vtheta
-      ),
-      "moments" = list(
-        "moment_first_step" = df_moment,
-        "moment_optimum" = df_moment_optim
-      ),
-      "NelderMead" = list(
-        "NM_step1" = NM_step1,
-        "NM_step2" = NM_step2
-      ),
-      "initialParams" = list("theta_0" = theta_0),
-      "envir" = envir
-    )
+    out
   )
 }
