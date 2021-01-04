@@ -159,7 +159,7 @@ testthat::test_that(
 
 
 testthat::test_that(
-  "[with weights = NULL] no longer l(theta) = length(theta)^2 but theta1^2 ",
+  "[with weights = NULL] no longer l(theta) = length(theta)^2",
   testthat::expect_equal(
     loss_function(seq_len(10),
                   prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
@@ -167,5 +167,19 @@ testthat::test_that(
                   moments_weights = 1/seq_len(10)),
     as.numeric(t(sqrt(1/seq_len(10)) * seq_len(10)) %*% optimal_weight_matrix(seq_len(10)) %*% (sqrt(1/seq_len(10)) * seq_len(10)))
   )
+)
+
+
+testthat::test_that(
+  "[with weights as matrix]",
+  {
+    testthat::expect_equal(
+      loss_function(seq_len(10),
+                    prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
+                    weights = diag(10),
+                    moments_weights = 1/seq_len(10)),
+      as.numeric(t(sqrt(1/seq_len(10)) * seq_len(10)) %*% diag(10) %*% (sqrt(1/seq_len(10)) * seq_len(10)))
+    )
+  }
 )
 
