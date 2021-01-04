@@ -6,7 +6,8 @@
 \usage{
 estimation_theta(
   theta_0,
-  model_function = {     function(theta) theta },
+  prediction_function = {     function(theta) theta },
+  objective_function = loss_function,
   approach = c("two_step", "one_step"),
   ...
 )
@@ -15,8 +16,12 @@ estimation_theta(
 \item{theta_0}{Initial values for \eqn{\theta} parameter. This can be a
 named vector}
 
-\item{model_function}{Function to transform \code{theta} into sample conditions.
+\item{prediction_function}{Function to transform \code{theta} into sample conditions.
 See examples.}
+
+\item{objective_function}{How to transform output from prediction_function into
+an objective function. Included for flexibility but not recommanded to change
+that default option}
 
 \item{approach}{Estimation approach. Either \emph{one_step} or \emph{two_step} (default)}
 

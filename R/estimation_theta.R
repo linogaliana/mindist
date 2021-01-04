@@ -21,8 +21,11 @@
 #'
 #' @param theta_0 Initial values for \eqn{\theta} parameter. This can be a
 #'  named vector
-#' @param model_function Function to transform `theta` into sample conditions.
+#' @param prediction_function Function to transform `theta` into sample conditions.
 #'  See examples.
+#' @param objective_function How to transform output from prediction_function into
+#'  an objective function. Included for flexibility but not recommanded to change
+#'  that default option
 #' @param approach Estimation approach. Either *one_step* or *two_step* (default)
 #' @param ... Additional arguments that should be used by
 #'  `model_function`
@@ -69,7 +72,8 @@
 #'
 
 estimation_theta <- function(theta_0,
-                             model_function = {function(theta) theta},
+                             prediction_function = {function(theta) theta},
+                             objective_function = loss_function,
                              # optim_args = list(),
                              approach = c("two_step","one_step"),
                              ...){
@@ -87,8 +91,9 @@ estimation_theta <- function(theta_0,
 
   # 1.1: theta_{(1)} vector =====================================
 
-  NM_step1 <- optim(fn = model_function,
+  NM_step1 <- optim(fn = objective_function,
                     par = theta_0,
+                    prediction_function = prediction_function,
                     ...,
                     weights = 1L,
                     # method = optim_method,
@@ -104,10 +109,11 @@ estimation_theta <- function(theta_0,
   # 1.2: W_{(1)} vector ===========================================
 
 
-  df_moment <- model_function(theta = NM_step1$`par`,
-                              ...,
-                              weights = 1L,
-                              return_moment = TRUE)
+  df_moment <- objective_function(theta = NM_step1$`par`,
+                                  prediction_function = prediction_function,
+                                  ...,
+                                  weights = 1L,
+                                  return_moment = TRUE)
 
 
   W_1 <- optimal_weight_matrix(df_moment[['epsilon']])
@@ -125,8 +131,9 @@ estimation_theta <- function(theta_0,
     # DETERMINE THETA_HAT =====================
 
     # WE START FROM \theta_{(1)} WITH W(\theta_{(1)})
-    NM_step2 <- optim(fn = model_function,
+    NM_step2 <- optim(fn = objective_function,
                       par = NM_step1$`par`,
+                      prediction_function = prediction_function,
                       ...,
                       weights = W_1,
                       # method = optim_method,
@@ -150,7 +157,7 @@ estimation_theta <- function(theta_0,
 
   Gamma <- approx_jacobian_epsilon(
     theta = estimator_theta,
-    model_function = model_function,
+    model_function = prediction_function,
     ...,
     step = 1e-6)
 
@@ -159,16 +166,16 @@ estimation_theta <- function(theta_0,
   # Gamma <- Gamma/N_moments
 
 
-  df_moment_optim <- model_function(theta = estimator_theta,
-                                    ...,
-                                    weights = W_1,
-                                    return_moment = TRUE)
+  df_moment_optim <- prediction_function(theta = estimator_theta,
+                                         ...,
+                                         weights = W_1,
+                                         return_moment = TRUE)
 
   # CAPTURE ENVIRONMENT
-  envir <- model_function(theta = estimator_theta,
-                          match_call = TRUE,
-                          ...,
-                          weights = W_1)
+  envir <- prediction_function(theta = estimator_theta,
+                               match_call = TRUE,
+                               ...,
+                               weights = W_1)
 
 
   # message("Z argument missing, using ones")
@@ -195,34 +202,36 @@ estimation_theta <- function(theta_0,
   # Vtheta <- Vtheta/N_moments
 
   # (eq. 9.100 in Davidson MacKinnon)
-  Vtheta <- matinv
-  Vtheta <- matinv
-  # Vtheta <- matinv*nrow(Gamma)
+  # Vtheta <- matinv
+  Vtheta <- matinv*nrow(Gamma)
 
-  se_estimator <- sqrt(diag(Vtheta))/nrow(Gamma) # to match with (9.100) in MacKinnon (because our Vtheta is not 1/n factor)
+  se_estimator <- sqrt(diag(Vtheta)/nrow(Gamma)) # to match with (9.100) in MacKinnon (because our Vtheta is not 1/n factor)
   names(se_estimator) <- names(estimator_theta)
 
+  out <- list(
+    "estimates" = list(
+      "theta_hat" = estimator_theta,
+      "se_theta_hat" = se_estimator,
+      "theta_1" = NM_step1$`par`,
+      "W_1" = W_1,
+      "jacobian" = Gamma,
+      "vcov_theta" = Vtheta
+    ),
+    "moments" = list(
+      "moment_first_step" = df_moment,
+      "moment_optimum" = df_moment_optim
+    ),
+    "NelderMead" = list(
+      "NM_step1" = NM_step1,
+      "NM_step2" = NM_step2
+    ),
+    "initialParams" = list("theta_0" = theta_0),
+    "envir" = envir
+  )
+
+  class(out) <- c("mindist", class(out))
 
   return(
-    list(
-      "estimates" = list(
-        "theta_hat" = estimator_theta,
-        "se_theta_hat" = se_estimator,
-        "theta_1" = NM_step1$`par`,
-        "W_1" = W_1,
-        "jacobian" = Gamma,
-        "vcov_theta" = Vtheta
-      ),
-      "moments" = list(
-        "moment_first_step" = df_moment,
-        "moment_optimum" = df_moment_optim
-      ),
-      "NelderMead" = list(
-        "NM_step1" = NM_step1,
-        "NM_step2" = NM_step2
-      ),
-      "initialParams" = list("theta_0" = theta_0),
-      "envir" = envir
-    )
+    out
   )
 }

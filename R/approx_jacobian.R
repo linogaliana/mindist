@@ -49,9 +49,7 @@ approx_jacobian_epsilon <- function(
   )
 
   all_theta <- unlist(all_theta, recursive = FALSE)
-  grad <- lapply(all_theta, extract_moment,
-                 model_function = model_function,
-                 return_moment = TRUE, ...)
+  grad <- lapply(all_theta, function(params) model_function(params, ...)[['epsilon']])
 
   names(grad) <- do.call(
     c,
@@ -94,5 +92,5 @@ approx_jacobian_epsilon <- function(
 #' @return Mismatch between theoretical and sample moments
 
 extract_moment <- function(theta, model_function, ...){
-  loss_function(theta = theta, model_function = model_function, ...)[['epsilon']]
+  model_function(theta = theta, ...)[['epsilon']]
 }
