@@ -1,12 +1,48 @@
 context("test-loss_function")
 
 
-# return_moment = TRUE --------------------------
+# play with prediction function --------------------------
+
+testthat::test_that(
+  "By default, prediction_function is identity",
+  {
+    testthat::expect_identical(
+      loss_function(2L, return_moment = TRUE),
+      2L
+    )
+    testthat::expect_identical(
+      loss_function(seq_len(10), return_moment = TRUE),
+      seq_len(10)
+    )
+  }
+)
 
 
+testthat::test_that(
+  "prediction_function can be changed",
+  {
+    testthat::expect_equal(
+      loss_function(2L, return_moment = TRUE, prediction_function = function(theta) return(theta^2)),
+      4L
+    )
+    testthat::expect_equal(
+      loss_function(seq_len(10), return_moment = TRUE, prediction_function = function(theta) return(sqrt(theta))),
+      sqrt(seq_len(10))
+    )
+    testthat::expect_equal(
+      loss_function(seq_len(10), return_moment = TRUE, prediction_function = function(theta, a) return(a*theta), a = -3),
+      -3*seq_len(10)
+    )
+  }
+)
 
 
-
+testthat::test_that(
+  "error when prediction_function does not depend on theta",
+  testthat::expect_error(
+    loss_function(2L, return_moment = TRUE, prediction_function = function(x) return(x^2))
+  )
+)
 
 # true_theta <- c(4,2)
 #
