@@ -33,6 +33,7 @@ loss_function <- function(theta,
                           verbose = FALSE,
                           return_moment = FALSE,
                           moments_weights = NULL,
+                          moments_weighting_formula = as.formula("w ~ moments_weights"),
                           ...
 ){
 
@@ -69,7 +70,6 @@ loss_function <- function(theta,
       print("moments_weights is provided as character, assuming this is a variable name")
       moments_weights <- df_moment[[moments_weights]]
     }
-    # epsilon <- epsilon*moments_weights
   }
 
 
@@ -93,7 +93,11 @@ loss_function <- function(theta,
 
   eps_weight <- epsilon
   if (!is.null(moments_weights)){
-    eps_weight <- sqrt(moments_weights)*eps_weight
+
+    w <- as.numeric(model.matrix(moments_weighting_formula[-2], data.frame(moments_weights))[,2])
+
+    eps_weight <- sqrt(w)*eps_weight
+    # eps_weight is squared later on
   }
 
   if (length(weights) == 1){

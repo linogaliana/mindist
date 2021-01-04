@@ -11,6 +11,7 @@ loss_function(
   verbose = FALSE,
   return_moment = FALSE,
   moments_weights = NULL,
+  moments_weighting_formula = as.formula("w ~ moments_weights"),
   ...
 )
 }

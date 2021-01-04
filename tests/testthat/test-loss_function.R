@@ -99,7 +99,7 @@ testthat::test_that(
 
 # weight is a matrix
 testthat::test_that(
-  "matrix: \eps' %*% W %*% \eps",
+  "matrix: \\eps' %*% W %*% \\eps",
   {
     testthat::expect_equal(
       loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = diag(2)),
@@ -107,7 +107,7 @@ testthat::test_that(
     )
     testthat::expect_equal(
       loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = diag(rep(2,2))),
-      sum(c(2L,3L)^2)
+      sum(2*c(2L,3L)^2)
     )
     testthat::expect_equal(
       loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)), weights = diag(c(1,2))),
@@ -145,14 +145,35 @@ testthat::test_that(
   {
     testthat::expect_equal(
       loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
-                    moments_weights = 4L),
+                    moments_weights = 4L
+                    ),
       sum(4L*c(2L,3L)^2)
     )
 
     testthat::expect_equal(
       loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
-                    moments_weights = c(1L,4L)),
+                    moments_weights = c(1L,4L)
+                    ),
       sum(c(1L,4L)*c(2L,3L)^2)
+    )
+  }
+)
+
+testthat::test_that(
+  "[without weights] moments_weighting_formula control how weighting occurs",
+  {
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
+                    moments_weights = 4L,
+                    moments_weighting_formula = as.formula("w ~ I(moments_weights^2)")),
+      sum(4L^2*c(2L,3L)^2)
+    )
+
+    testthat::expect_equal(
+      loss_function(c(2L,3L), prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
+                    moments_weights = c(1L,4L),
+                    moments_weighting_formula = as.formula("w ~ I(log(moments_weights))")),
+      sum(log(c(1L,4L))*c(2L,3L)^2)
     )
   }
 )
@@ -186,6 +207,15 @@ testthat::test_that(
                     weights = diag(seq_len(10)),
                     moments_weights = 1/seq_len(10)),
       as.numeric(t(sqrt(1/seq_len(10)) * seq_len(10)) %*% diag(seq_len(10)) %*% (sqrt(1/seq_len(10)) * seq_len(10)))
+    )
+    testthat::expect_equal(
+      loss_function(seq_len(10),
+                    prediction_function = function(theta) return(data.table::data.table(epsilon = theta)),
+                    weights = diag(seq_len(10)),
+                    moments_weights = seq_len(10),
+                    moments_weighting_formula = as.formula("w ~ I(log(moments_weights))")
+                    ),
+      as.numeric(t(sqrt(log(seq_len(10))) * seq_len(10)) %*% diag(seq_len(10)) %*% (sqrt(log(seq_len(10))) * seq_len(10)))
     )
   }
 )
