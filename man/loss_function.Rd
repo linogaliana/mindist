@@ -11,7 +11,7 @@ loss_function(
   verbose = FALSE,
   return_moment = FALSE,
   moments_weights = NULL,
-  moments_weighting_formula = as.formula("w ~ moments_weights"),
+  moments_weighting_formula = "w ~ moments_weights",
   ...
 )
 }
@@ -19,7 +19,7 @@ loss_function(
 \item{theta}{Vector of structural parameters. Assuming a named vector.}
 
 \item{prediction_function}{Function that transforms \eqn{\theta}
-into vector of moments. In Newer and MacFadden, denoted \eqn{g(\theta)}}
+into vector of moments. In Newey and MacFadden, denoted \eqn{g(\theta)}}
 
 \item{weights}{Weight matrix \eqn{W} that should be used}
 
@@ -32,6 +32,9 @@ return moment matrix (observed, simulation, difference)}
 \item{moments_weights}{User-defined weights that should be applied
 to reweight moments importance. This is a user choice
 independent of using an optimal weight matrix}
+
+\item{moments_weighting_formula}{When relevent, how moment weighting
+should enter in the objective function}
 
 \item{...}{Additional arguments that should be used to control
 \code{prediction_function} behavior. This function should return a

@@ -5,11 +5,13 @@
 #'
 #' @param theta Vector of structural parameters. Assuming a named vector.
 #' @param prediction_function Function that transforms \eqn{\theta}
-#'  into vector of moments. In Newer and MacFadden, denoted \eqn{g(\theta)}
+#'  into vector of moments. In Newey and MacFadden, denoted \eqn{g(\theta)}
 #' @param weights Weight matrix \eqn{W} that should be used
 #' @param moments_weights User-defined weights that should be applied
 #'  to reweight moments importance. This is a user choice
 #'  independent of using an optimal weight matrix
+#' @param moments_weighting_formula When relevent, how moment weighting
+#'  should enter in the objective function
 #' @param ... Additional arguments that should be used to control
 #'  `prediction_function` behavior. This function should return a
 #'  `data.table` object with a variable denoted `epsilon` giving the
@@ -26,14 +28,13 @@
 #'
 #' @export
 
-
 loss_function <- function(theta,
                           prediction_function = {function(theta) theta},
                           weights = 1L,
                           verbose = FALSE,
                           return_moment = FALSE,
                           moments_weights = NULL,
-                          moments_weighting_formula = as.formula("w ~ moments_weights"),
+                          moments_weighting_formula = "w ~ moments_weights",
                           ...
 ){
 
@@ -94,7 +95,10 @@ loss_function <- function(theta,
   eps_weight <- epsilon
   if (!is.null(moments_weights)){
 
-    w <- as.numeric(model.matrix(moments_weighting_formula[-2], data.frame(moments_weights))[,2])
+    w <- as.numeric(stats::model.matrix(
+      stats::as.formula(moments_weighting_formula)[-2],
+      data.frame(moments_weights))[,2]
+    )
 
     eps_weight <- sqrt(w)*eps_weight
     # eps_weight is squared later on

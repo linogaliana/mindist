@@ -16,13 +16,17 @@ estimation_theta(
 \item{theta_0}{Initial values for \eqn{\theta} parameter. This can be a
 named vector}
 
+\item{prediction_function}{Function to transform \code{theta} into sample conditions.
+See examples.}
+
+\item{objective_function}{How to transform output from prediction_function into
+an objective function. Included for flexibility but not recommanded to change
+that default option}
+
 \item{approach}{Estimation approach. Either \emph{one_step} or \emph{two_step} (default)}
 
 \item{...}{Additional arguments that should be used by
 \code{model_function}}
-
-\item{model_function}{Function to transform \code{theta} into sample conditions.
-See examples.}
 }
 \description{
 User front-end function for indirect inference on microsimulated data.

@@ -21,8 +21,11 @@
 #'
 #' @param theta_0 Initial values for \eqn{\theta} parameter. This can be a
 #'  named vector
-#' @param model_function Function to transform `theta` into sample conditions.
+#' @param prediction_function Function to transform `theta` into sample conditions.
 #'  See examples.
+#' @param objective_function How to transform output from prediction_function into
+#'  an objective function. Included for flexibility but not recommanded to change
+#'  that default option
 #' @param approach Estimation approach. Either *one_step* or *two_step* (default)
 #' @param ... Additional arguments that should be used by
 #'  `model_function`
