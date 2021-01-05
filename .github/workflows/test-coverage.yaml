@@ -1,12 +1,5 @@
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+# Triggers the workflow on push or pull request events
+on: [push, pull_request]
 
 name: test-coverage
 
