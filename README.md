@@ -8,7 +8,7 @@
 
 ![](./inst/cmd.png)
 
-The goal of mindist is to ...
+The goal of mindist is to provide an interface for minimum distance estimation on `R`
 
 ## Installation
 
