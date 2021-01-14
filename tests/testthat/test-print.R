@@ -174,3 +174,32 @@ testthat::test_that("Number of iterations correct",{
   )
 })
 
+# COEFFICIENTS -------
+
+
+msm1_print_sp <- strsplit(x = paste(msm1_print, collapse = " "), "---------------------------")[[1]]
+msm2_print_sp <- strsplit(x = paste(msm2_print, collapse = " "), "---------------------------")[[1]]
+
+testthat::test_that("names reported correct for 1 step estimation", {
+  testthat::expect_equal(
+    sum(startsWith(trimws(msm1_print), "mu")),
+    1
+  )
+  testthat::expect_equal(
+    sum(endsWith(trimws(msm1_print), "sigma")),
+    1
+  )
+})
+
+testthat::test_that("names reported correct for 1 step estimation", {
+  testthat::expect_equal(
+    sum(startsWith(trimws(msm2_print), "mu")),
+    2
+  )
+  testthat::expect_equal(
+    sum(endsWith(trimws(msm2_print), "sigma")),
+    2
+  )
+})
+
+
