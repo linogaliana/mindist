@@ -231,6 +231,8 @@ estimation_theta <- function(theta_0,
 
   class(out) <- c("mindist", class(out))
 
+  attr(out, "approach") <- approach
+
   return(
     out
   )
