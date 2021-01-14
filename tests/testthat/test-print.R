@@ -114,7 +114,7 @@ testthat::test_that("E(\\epsilon'\\epsilon) correct",{
               format(
                 mean(
                   msm1$moments$moment_first_step$epsilon^2
-                  ), digits = digits
+                ), digits = digits
               )
       ), msm1_print)
     ),
@@ -146,3 +146,31 @@ testthat::test_that("E(\\epsilon'\\epsilon) correct",{
   )
 
 })
+
+testthat::test_that("Number of iterations correct",{
+  testthat::expect_equal(
+    sum(grepl(
+      sprintf("Step 1: %s",
+              msm1$NelderMead$NM_step1$counts['function']
+      ),
+      msm1_print)),
+      1
+  )
+  testthat::expect_equal(
+    sum(grepl(
+      sprintf("Step 1: %s",
+              msm2$NelderMead$NM_step1$counts['function']
+      ),
+      msm2_print)),
+    1
+  )
+  testthat::expect_equal(
+    sum(grepl(
+      sprintf("Step 2: %s",
+              msm2$NelderMead$NM_step2$counts['function']
+      ),
+      msm2_print)),
+    1
+  )
+})
+
