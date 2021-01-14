@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • mindist</title>
+<title>Transform pvalues into significance stars — signif_stars • mindist</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Transform pvalues into significance stars — signif_stars" />
+<meta property="og:description" content="Transform pvalues into significance stars" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,84 +101,35 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Transform pvalues into significance stars</h1>
+    
+    <div class="hidden name"><code>signif_stars.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Transform pvalues into significance stars</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>signif_stars</span><span class='op'>(</span><span class='va'>pvalue</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"latex"</span>, <span class='st'>"html"</span>, <span class='st'>"none"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="approx_jacobian_epsilon.html">approx_jacobian_epsilon()</a></code> </p>
-        </td>
-        <td><p>Approximate jacobian matrix for loss function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="estimation_theta.html">estimation_theta()</a></code> </p>
-        </td>
-        <td><p>Structural estimation for life-cycle model over microsimulated data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="extract_moment.html">extract_moment()</a></code> </p>
-        </td>
-        <td><p>Internal function to extract moments</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="loss_function.html">loss_function()</a></code> </p>
-        </td>
-        <td><p>Compute loss function in a flexible way</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mindist.html">mindist</a></code> </p>
-        </td>
-        <td><p>mindist: A package for minimum distance estimation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="optimal_weight_matrix.html">optimal_weight_matrix()</a></code> </p>
-        </td>
-        <td><p>Efficient weight matrix in GMM framework</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sargan_test.html">sargan_test()</a></code> </p>
-        </td>
-        <td><p>Overidentification test for method of simulated moments</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="signif_stars.html">signif_stars()</a></code> </p>
-        </td>
-        <td><p>Transform pvalues into significance stars</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pvalue</th>
+      <td><p>pvalue for coefficients</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Should the stars be <em>latex</em>
+or <em>html</em> formatted ?</p></td>
+    </tr>
     </table>
-  </div>
 
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
