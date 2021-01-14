@@ -40,7 +40,7 @@ msm1_print <- capture.output(msm1)
 msm2_print <- capture.output(msm2)
 
 
-testthat::test_that("Header are correct",{
+testthat::test_that("Headers are correct",{
   testthat::expect_equal(
     trimws(msm1_print[1:2]),
     c("Minimum distance estimation", "1 step estimation:")
@@ -51,4 +51,47 @@ testthat::test_that("Header are correct",{
   )
 })
 
+testthat::test_that("Number parameters correct",{
 
+  testthat::expect_equal(
+    as.numeric(trimws(
+      gsub("Number of parameters:", "",
+           msm1_print[grep("Number of parameters:", msm1_print)]
+      )
+    )),
+    length(msm1$estimates$theta_hat)
+  )
+
+  testthat::expect_equal(
+    as.numeric(trimws(
+      gsub("Number of parameters:", "",
+           msm1_print[grep("Number of parameters:", msm2_print)]
+      )
+    )),
+    length(msm2$estimates$theta_hat)
+  )
+
+
+})
+
+testthat::test_that("Number moments correct",{
+
+  testthat::expect_equal(
+    as.numeric(trimws(
+      gsub("Number of moments:", "",
+           msm1_print[grep("Number of moments:", msm1_print)]
+      )
+    )),
+    nrow(msm1$moments$moment_optimum)
+  )
+
+  testthat::expect_equal(
+    as.numeric(trimws(
+      gsub("Number of moments:", "",
+           msm1_print[grep("Number of moments:", msm2_print)]
+      )
+    )),
+    nrow(msm2$moments$moment_optimum)
+  )
+
+})
