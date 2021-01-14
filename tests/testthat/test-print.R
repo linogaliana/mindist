@@ -105,5 +105,44 @@ testthat::test_that("Number moments correct",{
 
 })
 
+digits <- max(3L, getOption("digits") - 3L)
 
+testthat::test_that("E(\\epsilon'\\epsilon) correct",{
+  testthat::expect_equal(
+    sum(grepl(
+      sprintf("Step 1: %s",
+              format(
+                mean(
+                  msm1$moments$moment_first_step$epsilon^2
+                  ), digits = digits
+              )
+      ), msm1_print)
+    ),
+    1
+  )
+  testthat::expect_equal(
+    sum(grepl(
+      sprintf("Step 1: %s",
+              format(
+                mean(
+                  msm2$moments$moment_first_step$epsilon^2
+                ), digits = digits
+              )
+      ), msm2_print)
+    ),
+    1
+  )
+  testthat::expect_equal(
+    sum(grepl(
+      sprintf("Step 2: %s",
+              format(
+                mean(
+                  msm2$moments$moment_optimum$epsilon^2
+                ), digits = digits
+              )
+      ), msm2_print)
+    ),
+    1
+  )
 
+})

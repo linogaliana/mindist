@@ -1,3 +1,5 @@
+#' @export
+
 print.mindist <- function(x, digits = max(3L, getOption("digits") - 3L), ...){
 
   nsteps <- ifelse(attr(x, "approach") == "two_step",
@@ -25,11 +27,11 @@ print.mindist <- function(x, digits = max(3L, getOption("digits") - 3L), ...){
 
   cat("\nE(\\epsilon'\\epsilon) :\n")
   cat(sprintf("   Step 1: %s\n",
-              format(mean(x$moments$moment_first_step$epsilon),
+              format(mean(x$moments$moment_first_step$epsilon^2),
                      digits = digits)))
   if (attr(x, "approach") == "two_step"){
     cat(sprintf("   Step 2: %s\n",
-                format(mean(x$moments$moment_optimum$epsilon),
+                format(mean(x$moments$moment_optimum$epsilon^2),
                        digits = digits)))
   }
 
