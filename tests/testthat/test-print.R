@@ -94,4 +94,16 @@ testthat::test_that("Number moments correct",{
     nrow(msm2$moments$moment_optimum)
   )
 
+  testthat::expect_equal(
+    length(msm1_print[msm1_print == "(Exact identification)"]),
+    1
+  )
+  testthat::expect_equal(
+    length(msm2_print[msm2_print == "(Exact identification)"]),
+    1
+  )
+
 })
+
+
+
