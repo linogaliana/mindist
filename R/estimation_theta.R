@@ -203,9 +203,9 @@ estimation_theta <- function(theta_0,
 
   # (eq. 9.100 in Davidson MacKinnon)
   # Vtheta <- matinv
-  Vtheta <- matinv*nrow(Gamma)
+  Vtheta <- nrow(Gamma)*matinv
 
-  se_estimator <- sqrt(diag(Vtheta)/nrow(Gamma)) # to match with (9.100) in MacKinnon (because our Vtheta is not 1/n factor)
+  se_estimator <- sqrt(diag(Vtheta)) # to match with (6) in stata help
   names(se_estimator) <- names(estimator_theta)
 
   out <- list(
