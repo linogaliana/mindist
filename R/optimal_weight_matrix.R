@@ -12,13 +12,7 @@
 
 optimal_weight_matrix <- function(epsilon){
 
-  temp <- epsilon %*% matrix(1,
-                             nrow = 1,
-                             ncol = length(epsilon))
-
-  temp <- diag(length(epsilon)) * temp
-
-  f <- crossprod(temp)
+  f <- diag(epsilon^2)
 
   f <- f/length(epsilon)
   W <- solve(f)
