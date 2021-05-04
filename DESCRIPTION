@@ -18,5 +18,6 @@ Suggests:
     gmm
 Imports:
     data.table,
-    Rdpack
+    Rdpack,
+    MASS
 RdMacros: Rdpack

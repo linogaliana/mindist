@@ -68,6 +68,7 @@
 #'
 #'
 #' @importFrom stats optim
+#' @importFrom MASS ginv
 #' @export
 #'
 
@@ -189,11 +190,18 @@ estimation_theta <- function(theta_0,
 
   if (is.null(args[['Z']])){
     # Formula (9.100) in Davidson & MacKinnon (2004)
-    matinv <- solve(t(as.matrix(Gamma)) %*% W_1 %*% as.matrix(Gamma))
+    syst <- t(as.matrix(Gamma)) %*% W_1 %*% as.matrix(Gamma)
+    matinv <- tryCatch(
+      solve(syst),error = function(e){
+        message("as.matrix(Gamma)) %*% W_1 %*% as.matrix(Gamma) not invertible. Using Moore-Penrose inverse")
+        MASS::ginv(syst)
+      }
+    )
   } else{
     Z <- args[['Z']]
     matinv <- solve(t(as.matrix(Gamma)) %*% Z %*% W_1 %*% Z %*% as.matrix(Gamma))
   }
+
 
 
 
