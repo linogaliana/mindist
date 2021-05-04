@@ -107,14 +107,14 @@ loss_function <- function(theta,
   if (length(weights) == 1){
     # with default weights = 1L,
     # equivalent to sse_hat = e_adj' * W_0 * e_adj in Einav et al. replication code in objective_function.m
-    return(sum(eps_weight^2)*weights)
+    return(sum(eps_weight^2)*weights/(length(eps_weight)^2))
   }
 
   # we mimic Einav et al. replication code (compute_std_errors.m)
   return(
     as.numeric(
       t(eps_weight) %*% W %*% eps_weight
-    )
+    )/(length(eps_weight)^2)
   )
 
 
