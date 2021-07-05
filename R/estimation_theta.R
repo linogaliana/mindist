@@ -77,6 +77,7 @@ estimation_theta <- function(theta_0,
                              objective_function = loss_function,
                              # optim_args = list(),
                              approach = c("two_step","one_step"),
+                             compute_standard_errors = TRUE,
                              ...){
 
   approach <- match.arg(approach)
@@ -151,6 +152,12 @@ estimation_theta <- function(theta_0,
   }
 
   estimator_theta <- NM_step2$`par`
+
+  print("Model converged")
+
+  if (isFALSE(compute_standard_errors)) return(estimator_theta)
+
+  print("Computing standard errors")
 
 
   # FINAL STEP: ESTIMATOR VARIANCE ------------------------------
