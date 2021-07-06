@@ -35,6 +35,8 @@ loss_function <- function(theta,
                           return_moment = FALSE,
                           moments_weights = NULL,
                           moments_weighting_formula = "w ~ moments_weights",
+                          moments_rescaling_constant = NULL,
+                          moments_rescaling_factor = NULL,
                           ...
 ){
 
@@ -72,6 +74,9 @@ loss_function <- function(theta,
       moments_weights <- df_moment[[moments_weights]]
     }
   }
+
+  if (!is.null(moments_rescaling_factor)) epsilon <- epsilon*moments_rescaling_factor
+  if (!is.null(moments_rescaling_constant)) epsilon <- epsilon + moments_rescaling_constant
 
 
   if (verbose) print(epsilon)

@@ -102,6 +102,7 @@ estimation_theta <- function(theta_0,
                     # control = optim_args,
                     return_moment = FALSE)
 
+  if (isFALSE(compute_standard_errors)) return(NM_step1)
 
 
   # # Create the first step vector of interest (theta_1)
@@ -154,9 +155,6 @@ estimation_theta <- function(theta_0,
   estimator_theta <- NM_step2$`par`
 
   print("Model converged")
-
-  if (isFALSE(compute_standard_errors)) return(estimator_theta)
-
   print("Computing standard errors")
 
 
