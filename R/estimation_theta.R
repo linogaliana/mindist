@@ -102,7 +102,6 @@ estimation_theta <- function(theta_0,
                     # control = optim_args,
                     return_moment = FALSE)
 
-  if (isFALSE(compute_standard_errors)) return(NM_step1)
 
 
   # # Create the first step vector of interest (theta_1)
@@ -118,6 +117,8 @@ estimation_theta <- function(theta_0,
                                   weights = 1L,
                                   return_moment = TRUE)
 
+  if (isFALSE(compute_standard_errors)) return(list("estimates" = NM_step1,
+                                                    "moments" = df_moment))
 
   W_1 <- optimal_weight_matrix(df_moment[['epsilon']])
 
